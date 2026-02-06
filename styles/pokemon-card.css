@@ -17,23 +17,64 @@
 }
 
 .pokemon-card {
+    position: relative;
     width: var(--card-width);
-    /* background-color: pink; */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border: 1px solid grey;
-    transition: transform 0.25s ease, 
-                box-shadow 0.25s ease,
-                border-radius 0.25s ease;
+
+    border-radius: var(--card-border-radius);
+    background: #fff;
+
+    transition: transform 0.25s ease;
+}
+
+.pokemon-card::before {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border-radius: inherit;
+
+    border: 2px solid rgba(0, 0, 0, 0.25);
+    opacity: 0;
+    transform: scale(0.9);
+
+    transition:
+        opacity 0.25s ease,
+        transform 0.25s ease,
+        border-color 0.25s ease;
+
+    pointer-events: none;
 }
 
 .pokemon-card:hover {
-    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.45);
     transform: translateY(-6px);
-    border-radius: var(--card-border-radius);
 }
+
+.pokemon-card:hover::before {
+    opacity: 1;
+    transform: scale(1);
+    border-color: rgba(0, 0, 0, 0.45);
+}
+
+.pokemon-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+    opacity: 0;
+    transition: opacity 0.25s ease;
+
+    z-index: -1;
+}
+
+.pokemon-card:hover::after {
+    opacity: 1;
+}
+
 
 .pokemon-creds {
     display: flex;
