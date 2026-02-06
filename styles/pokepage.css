@@ -83,7 +83,7 @@ body {
     grid-template-columns: 1fr 1fr 1fr;
     padding: 10px 10px;
     row-gap: 10px;
-    margin-left: 20px;
+    margin-left: 10px;
 }
 
 .base-stat-name,
