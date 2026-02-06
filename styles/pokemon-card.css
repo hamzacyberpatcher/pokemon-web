@@ -69,7 +69,10 @@
 }
 
 .poke-img {
-    width: 150px;
+    width: auto;
+    height: 150px;
+    object-fit: contain;
+    margin: 10px 0;
 }
 
 .basic-stats-container {
