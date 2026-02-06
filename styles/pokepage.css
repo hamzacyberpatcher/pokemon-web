@@ -1,0 +1,235 @@
+body {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #f0f0f0;
+    padding-top: 60px;
+}
+
+.hero-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    width: 100%;
+    padding: 0 20px;
+}
+
+.poke-img,
+.poke-info {
+    flex: 1 1 400px;
+    max-width: 400px;
+    min-width: 300px;
+}
+
+
+.poke-img {
+    width: 450px;
+}
+
+.poke-info {
+    padding: 20px;
+    border-radius: 12px;
+    max-width: 450px;
+}
+
+.poke-name {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.poke-num {
+    color: grey;
+}
+
+.types-container {
+    display: flex;
+    gap: 14px;
+    margin: 10px 0px;
+}
+
+.type {
+    padding: 3px 8px;
+    border-radius: 50px;
+}
+
+.poke-flavor-text {
+    font-size: 1.1rem;
+    line-height: 24px;
+}
+
+.details-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    column-gap: 30px;
+    width: 100%;
+    padding: 0 20px;
+}
+
+.profile-container,
+.stats-container{
+    flex: 1 1 400px;
+    max-width: 400px;
+    min-width: 300px;
+}
+
+.profile-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    padding: 10px 10px;
+    row-gap: 10px;
+    margin-left: 20px;
+}
+
+.base-stat-name,
+.attack-stat-name {
+    color: grey;
+    font-size: 1rem;
+    margin-bottom: 5px;
+}
+
+.base-stat-val {
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.stats-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    row-gap: 10px;
+    margin-left: 20px;
+}
+
+.attack-stat {
+    width: 80%;
+}
+
+.bar {
+    width: 100%;
+    height: 15px;
+    background-color: grey;
+    border-radius: 20px;
+}
+
+.bar div {
+    height: 15px;
+    border-radius: 20px;
+}
+
+.abilities-container {
+    flex: 1 1 100%; /* Force it to take up the full row below the others */
+    max-width: 1030px; /* (500px profile + 500px stats + 30px gap) */
+    
+    /* This is the key for alignment */
+    margin: 20px 20px 0 20px; 
+    padding: 0 10px; 
+    
+    /* Ensure text aligns with the "Height" column */
+    display: flex;
+    flex-direction: column;
+    align-items: start; 
+}
+
+.abilities-container div {
+    margin-top: 5px;
+}
+
+.ability-name {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.hidden {
+    color: grey;
+}
+
+.evolution-chain {
+  padding: 20px 30px;
+  border-radius: 16px;
+  max-width: 800px;
+  width: 90%;
+}
+
+.evolution-chain h2 {
+  text-align: center;
+  margin-bottom: 24px;
+  font-size: 1.6rem;
+}
+
+.chain {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  flex-wrap: wrap; /* allow wrapping on small screens */
+}
+
+/* Pokémon card */
+.pokemon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.pokemon img {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+  border-radius: 12px;
+  padding: 8px;
+  transition: transform 0.2s;
+}
+
+.pokemon img:hover {
+  transform: scale(1.1);
+}
+
+.pokemon span {
+  margin-top: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+/* Arrow */
+.arrow {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #555;
+  transition: transform 0.2s;
+}
+
+/* ===========================
+   RESPONSIVE STYLES
+   =========================== */
+@media (max-width: 650px) {
+  .chain {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .arrow {
+    transform: rotate(90deg); /* make arrow point down */
+    font-size: 2.5rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .pokemon img {
+    width: 90px;
+    height: 90px;
+  }
+
+  .arrow {
+    font-size: 2rem;
+  }
+
+  .evolution-chain {
+    padding: 16px 20px;
+  }
+}
