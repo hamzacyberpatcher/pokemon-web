@@ -1,0 +1,143 @@
+:root {
+    --card-width: 300px;
+    --card-border-radius: 15px;
+    --stat-bar-height: 10px;
+    --stat-bar-radius: 100px;
+    --grey: rgb(189, 181, 181)
+}
+
+
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, var(--card-width));
+    row-gap: 20px;
+    column-gap: 35px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pokemon-card {
+    width: var(--card-width);
+    /* background-color: pink; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0px;
+    transition: transform 0.25s ease, 
+                box-shadow 0.25s ease,
+                border-radius 0.5s ease;
+}
+
+.pokemon-card:hover {
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.45);
+    transform: translateY(-6px);
+    border-radius: var(--card-border-radius);
+}
+
+.pokemon-creds {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 15px;
+}
+
+.pokedex-num {
+    color: var(--grey);
+}
+
+.poke-name {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.types-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5px;
+}
+
+.type {
+    font-size: 0.75rem;
+    padding: 4px 8px;
+    border-radius: 100px;
+    margin-right: 5px;
+    color: white;
+    font-weight: 600;
+}
+
+.poke-img {
+    width: 150px;
+}
+
+.basic-stats-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+    text-align: center;
+}
+
+.stat-type {
+    color: var(--grey);
+    font-size: 0.8rem;
+}
+
+.stat-value {
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.battle-stats-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    margin-top: 15px;
+    row-gap: 10px;
+}
+
+.battle-stat {
+    text-align: left;
+    width: 100%;
+}
+
+.bar {
+    width: 100%;
+    height: var(--stat-bar-height);
+    background-color: var(--grey);
+    border-radius: var(--stat-bar-radius);
+}
+
+.bar div {
+    height: var(--stat-bar-height);
+    border-radius: var(--stat-bar-radius);
+}
+
+.abilities-container {
+    width: 80%;
+    margin-top: 10px;
+    line-height: 22px;
+}
+
+.abilities-header {
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.hidden {
+    color: var(--grey);
+}
+
+.poke-flavor-text {
+    color: grey;
+    font-size: 1rem;
+    width: 80%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    line-height: 21px;
+}
