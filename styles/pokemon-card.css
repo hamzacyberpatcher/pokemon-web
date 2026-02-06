@@ -137,6 +137,9 @@
 }
 
 .poke-flavor-text {
+    display: flex;
+    align-items: center;
+    min-height: 65px;
     color: grey;
     font-size: 1rem;
     width: 80%;
