@@ -12,8 +12,8 @@
 }
 
 .page-btn {
-    width: 45px;
-    height: 45px;
+    width: 30px;
+    height: 30px;
     border-radius: 50%; /* Makes it a circle */
     border: 1px solid #eee;
     background-color: white;
