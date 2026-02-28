@@ -16,7 +16,7 @@ function abilitiesHtml(abilities) {
     let html = '';
     abilities.forEach(ability => {
         const hidden = ability.hidden;
-        html += `<div class="ability">${ability.ability.name} ${hidden ? '<span class="hidden">(Hidden)</span>' : ''} </div>`;
+        html += `<div class="ability">${(ability.ability.name.charAt(0).toUpperCase() + ability.ability.name.slice(1)).replace("-", " ")} ${hidden ? '<span class="hidden">(Hidden)</span>' : ''} </div>`;
     });
     return html;
 }
