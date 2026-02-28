@@ -7,13 +7,13 @@
 
 .pagination-container {
     display: flex;
-    gap: 5px;
+    gap: 10px;
     align-items: center;
 }
 
 .page-btn {
-    width: 30px;
-    height: 30px;
+    width: 35px;
+    height: 35px;
     border-radius: 50%; /* Makes it a circle */
     border: 1px solid #eee;
     background-color: white;
