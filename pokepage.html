@@ -13,7 +13,14 @@
 </head>
 <body>
     <header class="header">
-        <p>Pokedex</p>
+        <a href="index.html" class="poke-link"><div class="header-logo">Pokedex</div></a>
+        
+        <div class="search-container">
+            <input type="text" id="headerSearch" placeholder="Search Pokemon..." class="search-input">
+            <button class="search-icon-btn">
+                🔍
+            </button>
+        </div>
     </header>
 
      <main class="hero-container js-hero-container">
@@ -31,7 +38,6 @@
     </section>
 
     <script src="./scripts/pokePage.js" type="module"></script>
-    <script>
-    </script>
+    <script src="./scripts/header.js"></script>
 </body>
 </html>
