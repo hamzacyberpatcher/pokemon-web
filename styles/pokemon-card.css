@@ -93,6 +93,11 @@
     font-weight: bold;
 }
 
+.poke-link {
+    all: unset;
+    cursor: pointer;
+}
+
 .types-container {
     display: flex;
     justify-content: center;

@@ -26,12 +26,13 @@ async function renderPokeCard(pokemon) {
     const pokeData = await getPokemonData(pokemon);
 
     const cardHtml = `
-    <div class="pokemon-card">
+    <a href="./pokepage.html?pokemon=${pokeData.id}" class="poke-link">
+    <div class="pokemon-card" data-id="${pokeData.id}">
 
             <!-- pokemon info: dex num, name, types -->
 
             <div class="pokemon-creds">
-                <div class="pokedex-num">#${pokeData.id}</div>
+                <div class="pokedex-num">#${pokeData.id.toString().padStart(3, '0')}</div>
                 <div class="poke-name">${capitalizeWords(pokeData.species)}</div>
                 <div class="types-container">
                     ${typesHtml(pokeData.types)}
@@ -92,6 +93,7 @@ async function renderPokeCard(pokemon) {
             </div>
 
         </div>
+    </a>
     `;
 
     return cardHtml;
