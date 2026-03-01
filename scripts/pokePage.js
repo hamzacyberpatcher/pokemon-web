@@ -25,7 +25,7 @@ function renderErrorPage() {
     <img class="poke-img" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/54.png">
     `;
     document.querySelector('.js-hero-container').innerHTML = html;
-
+    document.title = "Pokemon Not Found";
 }
 
 async function renderPokePage(pokemon) {
@@ -112,6 +112,7 @@ async function renderPokePage(pokemon) {
 
     document.querySelector('.js-hero-container').innerHTML = heroHtml;
     document.querySelector('.js-details-container').innerHTML = deatilsHtml;
+    document.title = capitalizeWords(pokeData.species);
 }
 
 const pokemonCache = {};
