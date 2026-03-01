@@ -1,11 +1,12 @@
 import { getPokemonData } from "./data/dataExtractor.js"
+import { capitalizeWords, statPercent } from "./utils/format.js";
 
 function typesHtml(types) {
     let html = '';
     types.forEach(type => {
         html += `
             <p class="type ${type}">
-                ${type.charAt(0).toUpperCase() + type.slice(1)}
+                ${capitalizeWords(type)}
             </p>
         `;
     });
@@ -16,7 +17,7 @@ function abilitiesHtml(abilities) {
     let html = '';
     abilities.forEach(ability => {
         const hidden = ability.hidden;
-        html += `<div class="ability">${(ability.ability.name.charAt(0).toUpperCase() + ability.ability.name.slice(1)).replace("-", " ")} ${hidden ? '<span class="hidden">(Hidden)</span>' : ''} </div>`;
+        html += `<div class="ability">${capitalizeWords(ability.ability.name)} ${hidden ? '<span class="hidden">(Hidden)</span>' : ''} </div>`;
     });
     return html;
 }
@@ -31,7 +32,7 @@ async function renderPokeCard(pokemon) {
 
             <div class="pokemon-creds">
                 <div class="pokedex-num">#${pokeData.id}</div>
-                <div class="poke-name">${pokeData.species.replace("-", " ")}</div>
+                <div class="poke-name">${capitalizeWords(pokeData.species)}</div>
                 <div class="types-container">
                     ${typesHtml(pokeData.types)}
                 </div>
@@ -63,17 +64,17 @@ async function renderPokeCard(pokemon) {
             <div class="battle-stats-container">
                 <div class="battle-stat">
                     <div class="battle-stat-name">Attack</div>
-                    <div class="bar"><div class="${pokeData.types[0]}" style="width: ${Math.round((pokeData.stats.attack / 255) * 100)}%"></div></div>
+                    <div class="bar"><div class="${pokeData.types[0]}" style="width: ${statPercent(pokeData.stats.attack)}%"></div></div>
                 </div>
 
                 <div class="battle-stat">
                     <div class="battle-stat-name">Defense</div>
-                    <div class="bar"><div class="${(pokeData.types.length > 1 ? pokeData.types[1] : pokeData.types[0])}" style="width: ${Math.round((pokeData.stats.defense / 255) * 100)}%"></div></div>
+                    <div class="bar"><div class="${(pokeData.types.length > 1 ? pokeData.types[1] : pokeData.types[0])}" style="width: ${statPercent(pokeData.stats.defense)}%"></div></div>
                 </div>
 
                 <div class="battle-stat">
                     <div class="battle-stat-name">Speed</div>
-                    <div class="bar"><div class="${pokeData.types[0]}" style="width: ${Math.round((pokeData.stats.speed / 255) * 100)}%"></div></div>
+                    <div class="bar"><div class="${pokeData.types[0]}" style="width: ${statPercent(pokeData.stats.speed)}%"></div></div>
                 </div>
             </div>
 

@@ -7,7 +7,7 @@ export async function getPokemonData(pokemon) {
 
     let pokeData = {
         id: pokeRes1.id,
-        species: pokeRes1.name.charAt(0).toUpperCase() + pokeRes1.name.slice(1),
+        species: pokeRes1.name,
         height: `${(pokeRes1.height / 10).toFixed(2)} m`,
         weight: `${(pokeRes1.weight / 10).toFixed(2)} kg`,
         sprite: pokeRes1.sprites.front_default,
