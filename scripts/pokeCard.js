@@ -65,17 +65,17 @@ async function renderPokeCard(pokemon) {
             <div class="battle-stats-container">
                 <div class="battle-stat">
                     <div class="battle-stat-name">Attack</div>
-                    <div class="bar"><div class="${pokeData.types[0]}" style="width: ${statPercent(pokeData.stats.attack)}%"></div></div>
+                    <div class="bar" data-value="${pokeData.stats.attack}"><div class="${pokeData.types[0]}" style="width: ${statPercent(pokeData.stats.attack)}%"></div></div>
                 </div>
 
                 <div class="battle-stat">
                     <div class="battle-stat-name">Defense</div>
-                    <div class="bar"><div class="${(pokeData.types.length > 1 ? pokeData.types[1] : pokeData.types[0])}" style="width: ${statPercent(pokeData.stats.defense)}%"></div></div>
+                    <div class="bar" data-value="${pokeData.stats.defense}"><div class="${(pokeData.types.length > 1 ? pokeData.types[1] : pokeData.types[0])}" style="width: ${statPercent(pokeData.stats.defense)}%"></div></div>
                 </div>
 
                 <div class="battle-stat">
                     <div class="battle-stat-name">Speed</div>
-                    <div class="bar"><div class="${pokeData.types[0]}" style="width: ${statPercent(pokeData.stats.speed)}%"></div></div>
+                    <div class="bar" data-value="${pokeData.stats.speed}"><div class="${pokeData.types[0]}" style="width: ${statPercent(pokeData.stats.speed)}%"></div></div>
                 </div>
             </div>
 

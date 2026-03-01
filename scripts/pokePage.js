@@ -81,27 +81,27 @@ async function renderPokePage(pokemon) {
     <div class="stats-container">
         <div class="attack-stat">
             <div class="attack-stat-name">HP</div>
-            <div class="bar"><div class="${pokeData.types[0]}" style="width:${statPercent(pokeData.stats.hp)}%"></div></div>
+            <div class="bar" data-value="${pokeData.stats.hp}"><div class="${pokeData.types[0]}" style="width:${statPercent(pokeData.stats.hp)}%"></div></div>
         </div>
         <div class="attack-stat">
             <div class="attack-stat-name">Attack</div>
-            <div class="bar"><div class="${(pokeData.types.length > 1 ? pokeData.types[1] : pokeData.types[0])}" style="width:${statPercent(pokeData.stats.attack)}%"></div></div>
+            <div class="bar" data-value="${pokeData.stats.attack}"><div class="${(pokeData.types.length > 1 ? pokeData.types[1] : pokeData.types[0])}" style="width:${statPercent(pokeData.stats.attack)}%"></div></div>
         </div>
         <div class="attack-stat">
             <div class="attack-stat-name">Defense</div>
-            <div class="bar"><div class="${pokeData.types[0]}" style="width:${statPercent(pokeData.stats.defense)}%"></div></div>
+            <div class="bar" data-value="${pokeData.stats.defense}"><div class="${pokeData.types[0]}" style="width:${statPercent(pokeData.stats.defense)}%"></div></div>
         </div>
         <div class="attack-stat">
             <div class="attack-stat-name">Special Attack</div>
-            <div class="bar"><div class="${(pokeData.types.length > 1 ? pokeData.types[1] : pokeData.types[0])}" style="width:${statPercent(pokeData.stats.specialAtk)}%"></div></div>
+            <div class="bar" data-value="${pokeData.stats.specialAtk}"><div class="${(pokeData.types.length > 1 ? pokeData.types[1] : pokeData.types[0])}" style="width:${statPercent(pokeData.stats.specialAtk)}%"></div></div>
         </div>
         <div class="attack-stat">
             <div class="attack-stat-name">Special Defense</div>
-            <div class="bar"><div class="${pokeData.types[0]}" style="width:${statPercent(pokeData.stats.specialDef)}%"></div></div>
+            <div class="bar" data-value="${pokeData.stats.specialDef}"><div class="${pokeData.types[0]}" style="width:${statPercent(pokeData.stats.specialDef)}%"></div></div>
         </div>
         <div class="attack-stat">
             <div class="attack-stat-name">Speed</div>
-            <div class="bar"><div class="${(pokeData.types.length > 1 ? pokeData.types[1] : pokeData.types[0])}" style="width:${statPercent(pokeData.stats.speed)}%"></div></div>
+            <div class="bar" data-value="${pokeData.stats.speed}"><div class="${(pokeData.types.length > 1 ? pokeData.types[1] : pokeData.types[0])}" style="width:${statPercent(pokeData.stats.speed)}%"></div></div>
         </div>
     </div>
     <div class="abilities-container">

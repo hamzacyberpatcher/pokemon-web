@@ -160,11 +160,37 @@
     height: var(--stat-bar-height);
     background-color: var(--grey);
     border-radius: var(--stat-bar-radius);
+    position: relative; /* needed for tooltip positioning */
 }
 
 .bar div {
     height: var(--stat-bar-height);
     border-radius: var(--stat-bar-radius);
+    position: relative;
+    cursor: pointer;
+}
+
+/* Tooltip */
+.bar::after {
+    content: attr(data-value);
+    position: absolute;
+    top: -2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.75);
+    color: #fff;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+    z-index: 999;
+}
+
+.bar:hover::after {
+    opacity: 1;
 }
 
 .abilities-container {

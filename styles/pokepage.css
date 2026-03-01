@@ -114,11 +114,35 @@ body {
     height: 15px;
     background-color: rgb(189, 181, 181);
     border-radius: 20px;
+    position: relative;
+    cursor: pointer;
 }
 
 .bar div {
     height: 15px;
     border-radius: 20px;
+}
+
+.bar::after {
+    content: attr(data-value);
+    position: absolute;
+    top: -2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.75);
+    color: #fff;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+    z-index: 999;
+}
+
+.bar:hover::after {
+    opacity: 1;
 }
 
 .abilities-container {
