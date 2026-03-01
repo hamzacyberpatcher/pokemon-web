@@ -75,7 +75,7 @@ export async function getDetailedPokemonData(pokemon) {
         species: pokeRes1.name,
         height: `${(pokeRes1.height / 10).toFixed(2)} m`,
         weight: `${(pokeRes1.weight / 10).toFixed(2)} kg`,
-        sprite: pokeRes1.sprites.front_default,
+        sprite: pokeRes1["sprites"]["other"]["official-artwork"]["front_default"],
         abilities: detailedAbilities,
         types: [],
         stats: {
@@ -115,7 +115,7 @@ export async function getDetailedPokemonData(pokemon) {
 
     const uniqueEntries = [...new Set(englishEntries)];
 
-    pokeData["description"] = uniqueEntries.join(" ");
+    pokeData["description"] = uniqueEntries.slice(0, 5).join(" ");
 
     if (pokeRes2.is_baby) {
         pokeData["status"] = "baby";
@@ -127,7 +127,5 @@ export async function getDetailedPokemonData(pokemon) {
         pokeData["status"] = "ordinary";
     }
 
-    console.log(pokeData);
+    return pokeData;
 }
-
-getDetailedPokemonData('charizard');
