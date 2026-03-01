@@ -107,3 +107,16 @@ ul.tree>li>ul {
 .hidden {
     display: none;
 }
+
+/* Purge default link styles for the evolution tree nodes */
+.node-link {
+    text-decoration: none;
+    color: inherit;
+    display: inline-block; /* Keeps the layout of the node intact */
+}
+
+.node-link:hover .pokemon-node {
+    background: #647b9b; /* Subtle feedback when hovering the link */
+    transform: translateY(-2px);
+    transition: 0.2s ease;
+}

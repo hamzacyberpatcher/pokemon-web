@@ -153,10 +153,15 @@ async function buildTree(node, target, level = 1) {
 
     const li = document.createElement("li");
 
+    // 1. Create the Anchor (Hyperlink)
+    const link = document.createElement("a");
+    const name = node.species.name;
+    link.href = `pokepage.html?pokemon=${name}`;
+    link.classList.add("node-link"); // Add this class to purge styles in CSS
+
     const container = document.createElement("div");
     container.classList.add("pokemon-node");
 
-    const name = node.species.name;
     const pokemonData = await getPokemonData(name);
     const id = pokemonData.id;
 
@@ -177,20 +182,23 @@ async function buildTree(node, target, level = 1) {
     container.appendChild(stageBadge);
     container.appendChild(img);
     container.appendChild(label);
-    li.appendChild(container);
+
+    // 2. Wrap the container with the link
+    link.appendChild(container);
+    li.appendChild(link); 
 
     if (node.evolves_to.length > 0) {
         const childUl = document.createElement("ul");
-
         for (const evo of node.evolves_to) {
             childUl.appendChild(await buildTree(evo, target, level + 1));
         }
-
         li.appendChild(childUl);
     }
 
     ul.appendChild(li);
-    document.querySelector('.js-evo-chain-heading').classList.remove('hidden');
+    const heading = document.querySelector('.js-evo-chain-heading');
+    if (heading) heading.classList.remove('hidden');
+    
     return ul;
 }
 
