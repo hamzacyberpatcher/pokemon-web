@@ -14,7 +14,7 @@ function abilitiesHtml(abilities) {
     let html = '';
     abilities.forEach(ability => {
         const hidden = ability.hidden;
-        html += `<div><span class="ability-name">${capitalizeWords(ability.name)}</span> ${hidden ? '</span><span class="hidden">(Hidden) </span>' : ''} <span class="ability-desc">${ability.effect}</span></div>`;
+        html += `<div><span class="ability-name">${capitalizeWords(ability.name)}</span> ${hidden ? '</span><span class="hidden-tag">(Hidden) </span>' : ''} <span class="ability-desc">${ability.effect}</span></div>`;
     });
     return html;
 }
