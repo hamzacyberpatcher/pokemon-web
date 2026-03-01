@@ -31,7 +31,7 @@ async function renderPokeCard(pokemon) {
 
             <div class="pokemon-creds">
                 <div class="pokedex-num">#${pokeData.id}</div>
-                <div class="poke-name">${pokeData.species}</div>
+                <div class="poke-name">${pokeData.species.replace("-", " ")}</div>
                 <div class="types-container">
                     ${typesHtml(pokeData.types)}
                 </div>
@@ -68,7 +68,7 @@ async function renderPokeCard(pokemon) {
 
                 <div class="battle-stat">
                     <div class="battle-stat-name">Defense</div>
-                    <div class="bar"><div class="${pokeData.types[0]}" style="width: ${Math.round((pokeData.stats.defense / 255) * 100)}%"></div></div>
+                    <div class="bar"><div class="${(pokeData.types.length > 1 ? pokeData.types[1] : pokeData.types[0])}" style="width: ${Math.round((pokeData.stats.defense / 255) * 100)}%"></div></div>
                 </div>
 
                 <div class="battle-stat">
@@ -96,7 +96,10 @@ async function renderPokeCard(pokemon) {
     return cardHtml;
 }
 
-let currentPage = 1;
+const url = new URLSearchParams(window.location.search);
+const page = parseInt(url.get("pageno"));
+
+let currentPage = page || 1;
 const itemsPerPage = 24;
 const totalPokemon = 1025; // Update this to your total count
 const totalPages = Math.ceil(totalPokemon / itemsPerPage);
@@ -124,18 +127,27 @@ function renderPaginationControls() {
     const navContainer = document.getElementById('js-pagination-numbers');
     navContainer.innerHTML = '';
 
-    // Previous Arrow
+    // Helper function to handle page changes
+    const goToPage = (page) => {
+        currentPage = page;
+        // Updates the URL: index.html?pageno=X
+        window.history.pushState({}, '', `?pageno=${currentPage}`);
+        renderPokeCards(currentPage);
+    };
+
+    // --- Previous Arrow ---
     const prevBtn = document.createElement('button');
     prevBtn.innerHTML = '&lt;';
     prevBtn.className = 'page-btn arrow';
     prevBtn.disabled = currentPage === 1;
-    prevBtn.onclick = () => { currentPage--; renderPokeCards(currentPage); };
+    prevBtn.onclick = () => goToPage(currentPage - 1);
     navContainer.appendChild(prevBtn);
 
-    // Numbered Buttons (Showing a range around current page)
+    // --- Numbered Buttons ---
     let startPage = Math.max(1, currentPage - 2);
     let endPage = Math.min(totalPages, startPage + 4);
     
+    // Adjust range if we are near the end
     if (endPage - startPage < 4) {
         startPage = Math.max(1, endPage - 4);
     }
@@ -144,19 +156,16 @@ function renderPaginationControls() {
         const pageBtn = document.createElement('button');
         pageBtn.innerText = i;
         pageBtn.className = `page-btn ${i === currentPage ? 'active' : ''}`;
-        pageBtn.onclick = () => {
-            currentPage = i;
-            renderPokeCards(currentPage);
-        };
+        pageBtn.onclick = () => goToPage(i);
         navContainer.appendChild(pageBtn);
     }
 
-    // Next Arrow
+    // --- Next Arrow ---
     const nextBtn = document.createElement('button');
     nextBtn.innerHTML = '&gt;';
     nextBtn.className = 'page-btn arrow';
     nextBtn.disabled = currentPage === totalPages;
-    nextBtn.onclick = () => { currentPage++; renderPokeCards(currentPage); };
+    nextBtn.onclick = () => goToPage(currentPage + 1);
     navContainer.appendChild(nextBtn);
 }
 
