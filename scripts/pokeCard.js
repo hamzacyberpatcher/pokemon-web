@@ -26,7 +26,7 @@ async function renderPokeCard(pokemon) {
     const pokeData = await getPokemonData(pokemon);
 
     const cardHtml = `
-    <a href="./pokepage.html?pokemon=${pokeData.id}" class="poke-link">
+    <a href="./pokepage.html?pokemon=${pokeData.species}" class="poke-link">
     <div class="pokemon-card" data-id="${pokeData.id}">
 
             <!-- pokemon info: dex num, name, types -->
