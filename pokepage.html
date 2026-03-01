@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Charizard</title>
+    <title>Pokemon Detail & Evolution</title>
     <link rel="stylesheet" href="./styles/general.css">
     <link rel="stylesheet" href="./styles/header.css">
     <link rel="stylesheet" href="./styles/types.css">
     <link rel="stylesheet" href="./styles/pokepage.css">
+    <link rel="stylesheet" href="./styles/evolutions.css">
     <link rel="icon" href="./favicon/pokeball.png" type="image/png">
 </head>
 <body>
@@ -15,7 +16,7 @@
         <p>Pokedex</p>
     </header>
 
-    <main class="hero-container">
+     <main class="hero-container">
         <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png" alt="" class="poke-img">
         <div class="poke-info">
             <p><span class="poke-name">Charizard </span><span class="poke-num">#006</span></p>
@@ -89,34 +90,101 @@
         </div>
     </section>
 
-    <section class="evolution-chain">
-    <h2>Evolution Chain</h2>
+    <section class="evolution-section">
+        <h2>Evolution Chain</h2>
+        <div class="search-box">
+            <input type="text" id="pokemonInput" value="charizard">
+            <button onclick="fetchEvolution()">Search</button>
+        </div>
+        <div class="tree-container">
+            <div id="tree"></div>
+        </div>
+    </section>
 
-    <div class="chain">
+    <script>
+        const pokemonCache = {};
 
-      <!-- Charmander -->
-      <div class="pokemon">
-        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png" alt="Charmander">
-        <span>Charmander</span>
-      </div>
+        async function getPokemonData(name) {
+            if (pokemonCache[name]) return pokemonCache[name];
+            const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
+            if (!res.ok) throw new Error("Pokemon not found");
+            const data = await res.json();
+            pokemonCache[name] = data;
+            return data;
+        }
 
-      <div class="arrow">→</div>
+        // Modified to accept a name parameter
+        async function fetchEvolution(targetName) {
+            const name = targetName || document.getElementById("pokemonInput").value.toLowerCase().trim();
+            const treeContainer = document.getElementById("tree");
 
-      <!-- Charmeleon -->
-      <div class="pokemon">
-        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/5.png" alt="Charmeleon">
-        <span>Charmeleon</span>
-      </div>
+            if (!name) return;
+            treeContainer.innerHTML = "Loading Evolution Tree...";
 
-      <div class="arrow">→</div>
+            try {
+                const pokemonData = await getPokemonData(name);
+                const speciesRes = await fetch(pokemonData.species.url);
+                const speciesData = await speciesRes.json();
+                const evolutionRes = await fetch(speciesData.evolution_chain.url);
+                const evolutionData = await evolutionRes.json();
 
-      <!-- Charizard -->
-      <div class="pokemon">
-        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png" alt="Charizard">
-        <span>Charizard</span>
-      </div>
+                treeContainer.innerHTML = "";
+                const treeElement = await buildTree(evolutionData.chain, name);
+                treeContainer.appendChild(treeElement);
 
-    </div>
-  </section>
+            } catch (error) {
+                treeContainer.innerHTML = `<p>Error: ${error.message}</p>`;
+            }
+        }
+
+        async function buildTree(node, target, level = 1) {
+            const ul = document.createElement("ul");
+            ul.classList.add("tree");
+
+            const li = document.createElement("li");
+
+            const container = document.createElement("div");
+            container.classList.add("pokemon-node");
+
+            const name = node.species.name;
+            const pokemonData = await getPokemonData(name);
+            const id = pokemonData.id;
+
+            // Stage badge
+            const stageBadge = document.createElement("div");
+            stageBadge.classList.add("stage-badge");
+            stageBadge.textContent = `Stage ${level}`;
+
+            const img = document.createElement("img");
+            img.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
+            img.alt = name;
+
+            const label = document.createElement("div");
+            label.textContent = `#${id.toString().padStart(3, '0')} ${name.toUpperCase()}`;
+
+            if (name === target) container.classList.add("highlight");
+
+            container.appendChild(stageBadge);
+            container.appendChild(img);
+            container.appendChild(label);
+            li.appendChild(container);
+
+            if (node.evolves_to.length > 0) {
+                const childUl = document.createElement("ul");
+
+                for (const evo of node.evolves_to) {
+                    childUl.appendChild(await buildTree(evo, target, level + 1));
+                }
+
+                li.appendChild(childUl);
+            }
+
+            ul.appendChild(li);
+            return ul;
+        }
+
+        // Initialize with Charizard for now
+        fetchEvolution("wurmple");
+    </script>
 </body>
 </html>
