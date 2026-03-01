@@ -110,6 +110,26 @@ async function renderPokePage(pokemon) {
     </div>
     `;
 
+    const footerHtml = `
+        <button class="poke-nav js-prev">Prev</button>
+        <span id="pageInfo" class="footer-text">${pokeData.id} / 1025</span>
+        <button class="poke-nav js-next">Next</button>
+    `;
+
+    document.querySelector('.js-footer').innerHTML = footerHtml;
+
+    document.querySelector('.js-prev').addEventListener('click', () => {
+        if (pokeData.id > 1) {
+            window.location.href = `pokepage.html?pokemon=${pokeData.id - 1}`;
+        }
+    });
+
+    document.querySelector('.js-next').addEventListener('click', () => {
+        if (pokeData.id < 1025) {
+            window.location.href = `pokepage.html?pokemon=${pokeData.id + 1}`;
+        }
+    });
+
     document.querySelector('.js-hero-container').innerHTML = heroHtml;
     document.querySelector('.js-details-container').innerHTML = deatilsHtml;
     document.title = capitalizeWords(pokeData.species);
@@ -128,7 +148,7 @@ async function getPokemonData(name) {
 
 // Modified to accept a name parameter
 async function fetchEvolution(targetName) {
-    const name = targetName;
+    const name = isNaN(targetName) ? targetName : Number(targetName);
     const treeContainer = document.getElementById("tree");
 
     if (!name) return;
@@ -178,7 +198,7 @@ async function buildTree(node, target, level = 1) {
     const label = document.createElement("div");
     label.textContent = `#${id.toString().padStart(3, '0')} ${capitalizeWords(name)}`;
 
-    if (name === target) container.classList.add("highlight");
+    if (name === target || id === target) container.classList.add("highlight");
 
     container.appendChild(stageBadge);
     container.appendChild(img);

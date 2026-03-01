@@ -1,0 +1,54 @@
+/* Footer base */
+.poke-footer {
+  display: flex;
+  justify-content: space-between; /* Prev left, Next right */
+  align-items: center;
+  padding: 6px 24px;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  width: 100%;
+  box-sizing: border-box;
+  z-index: 100;
+}
+
+/* Prev / Next buttons */
+.poke-nav {
+  background-color: #3c5aa6; /* Pokemon yellow */
+  color: white; /* dark text */
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 14px;
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+
+/* Page info text */
+.footer-text {
+  color: #1e1e1e;
+  font-weight: 600;
+  text-align: center;
+  flex: 1; /* take remaining space to stay centered */
+}
+
+/* Responsive adjustments for mobile */
+@media (max-width: 500px) {
+  .poke-footer {
+    flex-direction: column;
+    gap: 8px;
+    padding: 10px 16px;
+  }
+
+  .poke-nav {
+    width: 100%;
+    text-align: center;
+  }
+
+  .footer-text {
+    order: -1; /* put page info above buttons */
+    width: 100%;
+    margin-bottom: 6px;
+  }
+}
