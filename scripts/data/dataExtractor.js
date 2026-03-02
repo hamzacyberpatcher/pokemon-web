@@ -48,9 +48,13 @@ export async function getPokemonData(pokemon) {
 }
 
 export async function getDetailedPokemonData(pokemon) {
+    if (!navigator.onLine) throw new Error("OFFLINE");
+
     const response1 = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`);
+    if (!response1.ok) throw new Error("NOT_FOUND");
     const pokeRes1 = await response1.json();
-    const response2 = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${pokemon}`)
+    const response2 = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${pokemon}`);
+    if (!response2.ok) throw new Error("NOT_FOUND");
     const pokeRes2 = await response2.json();
 
     const abilityPromises = pokeRes1.abilities.map(async (element) => {

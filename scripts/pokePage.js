@@ -19,22 +19,55 @@ function abilitiesHtml(abilities) {
     return html;
 }
 
-function renderErrorPage() {
-    let html = `
-    <h2>Pokemon Not Found</h2>
-    <img class="poke-img" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/54.png">
+function renderErrorPage(type = 'not-found') {
+    const container = document.querySelector('.js-hero-container');
+    const detailsContainer = document.querySelector('.js-details-container');
+    const footer = document.querySelector('.js-footer');
+
+    // Clear other containers so the error is the focus
+    if (detailsContainer) detailsContainer.innerHTML = '';
+    if (footer) footer.innerHTML = '';
+
+    let title, message, sprite;
+
+    if (type === 'offline') {
+        title = "No Internet Connection";
+        message = "Please check your network and try again.";
+    } else {
+        title = "Pokemon Not Found";
+        message = "We couldn't find the Pokémon you're looking for.";
+        sprite = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/54.png";
+    }
+
+    container.innerHTML = `
+        <div class="error-state">
+            <h2>${title}</h2>
+            ${type === 'offline' ? '' : `<img class="poke-img" src="${sprite}" alt="Error">`}
+            ${type === 'offline' ? `<p>${message}</p>` : ''}
+            ${type === 'offline' ? '<br><button onclick="location.reload()" class="retry-btn">Retry Connection</button>' : ''}
+        </div>
     `;
-    document.querySelector('.js-hero-container').innerHTML = html;
-    document.title = "Pokemon Not Found";
+    document.title = title;
+    document.getElementById('tree').innerHTML = '';
 }
 
 async function renderPokePage(pokemon) {
+    if (!navigator.onLine) {
+        renderErrorPage('offline');
+        return;
+    }
+
     let pokeData;
     try {
         pokeData = await getDetailedPokemonData(pokemon);
-    } catch {
-        console.log('pokemon doesnt exist');
-        renderErrorPage();
+    } catch(error) {
+        console.error("Navigation/Fetch Error:", error);
+        // 2. Distinguish between Offline and Not Found
+        if (error.message === "OFFLINE") {
+            renderErrorPage('offline');
+        } else {
+            renderErrorPage('not-found');
+        }
         return;
     }
 
@@ -133,6 +166,8 @@ async function renderPokePage(pokemon) {
     document.querySelector('.js-hero-container').innerHTML = heroHtml;
     document.querySelector('.js-details-container').innerHTML = deatilsHtml;
     document.title = capitalizeWords(pokeData.species);
+
+    fetchEvolution(pokemon);
 }
 
 const pokemonCache = {};
@@ -227,8 +262,21 @@ const url = new URLSearchParams(window.location.search);
 const pokemon = url.get("pokemon");
 
 if (pokemon) {
-    fetchEvolution(pokemon);
     renderPokePage(pokemon);
 } else {
     renderErrorPage();
 }
+
+window.addEventListener('online', () => {
+    const heroContainer = document.querySelector('.js-hero-container');
+    
+    if (heroContainer.querySelector('.error-state')) {
+        console.log("Internet restored! Attempting to reload...");
+
+        const url = new URLSearchParams(window.location.search);
+        const pokemon = url.get("pokemon");
+        if (pokemon) {
+            renderPokePage(pokemon);
+        }
+    }
+});

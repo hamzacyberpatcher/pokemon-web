@@ -107,23 +107,48 @@ const itemsPerPage = 24;
 const totalPokemon = 1025; // Update this to your total count
 const totalPages = Math.ceil(totalPokemon / itemsPerPage);
 
+function renderErrorMessage(container, message) {
+    container.innerHTML = `
+        <div class="error-container" style="text-align: center; padding: 2rem;">
+            <p class="error-message">${message}</p>
+            <button class="retry-btn" onclick="location.reload()">Retry Connection</button>
+        </div>
+    `;
+}
+
 async function renderPokeCards(page) {
     const container = document.querySelector('.js-card-container');
-    container.innerHTML = '<div class="loading">Loading...</div>';
-
-    const startId = (page - 1) * itemsPerPage + 1;
-    const endId = Math.min(startId + itemsPerPage - 1, totalPokemon);
-
-    const promises = [];
-    for (let i = startId; i <= endId; i++) {
-        promises.push(renderPokeCard(i));
+    const errorContainer = document.querySelector('.js-error-container');
+    
+    // 1. Check if the user is offline before even trying
+    if (!navigator.onLine) {
+        renderErrorMessage(errorContainer, "No internet connection. Please check your network.");
+        return;
     }
 
-    const cards = await Promise.all(promises);
-    container.innerHTML = cards.join('');
-    
-    renderPaginationControls();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    container.innerHTML = '<div class="loading">Loading...</div>';
+
+    try {
+        const startId = (page - 1) * itemsPerPage + 1;
+        const endId = Math.min(startId + itemsPerPage - 1, totalPokemon);
+
+        const promises = [];
+        for (let i = startId; i <= endId; i++) {
+            promises.push(renderPokeCard(i));
+        }
+
+        // 2. Wrap the fetch in a timeout or catch block
+        const cards = await Promise.all(promises);
+        
+        container.innerHTML = cards.join('');
+        renderPaginationControls();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    } catch (error) {
+        // 3. Handle unexpected errors (DNS failure, Server down, etc.)
+        console.error("Failed to fetch Pokémon:", error);
+        renderErrorMessage(errorContainer, "Failed to load Pokémon. The server might be down or your connection was interrupted.");
+    }
 }
 
 function renderPaginationControls() {
@@ -173,3 +198,12 @@ function renderPaginationControls() {
 }
 
 renderPokeCards(currentPage);
+
+window.addEventListener('online', () => {
+    // If the container currently shows an error, try re-rendering
+    const container = document.querySelector('.js-error-container');
+    if (container.querySelector('.error-container')) {
+        renderPokeCards(currentPage);
+        document.querySelector('.js-error-container').innerHTML = '';
+    }
+});

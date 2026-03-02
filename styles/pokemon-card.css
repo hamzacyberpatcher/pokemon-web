@@ -224,3 +224,23 @@
     color: grey;
     font-size: 0.8rem;
 }
+
+.error-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    width: 100vw;
+    height: 100%;
+}
+
+.retry-btn {
+    width: 150px;
+    height: 40px;
+    background-color: var(--grey);
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+}

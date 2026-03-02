@@ -249,3 +249,13 @@ body {
     all: unset;
     cursor: pointer;
 }
+
+.retry-btn {
+    width: 150px;
+    height: 40px;
+    background-color: rgb(189, 181, 181);
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+}
